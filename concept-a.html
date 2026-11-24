@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>קונספט א — יסודות לצמיחה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Assistant:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --terracotta:#BF514F; --terracotta-dark:#9F413F; --navy:#131244;
+    --skyblue:#B2D5E2; --periwinkle:#71A0FF; --royal:#374EA8;
+    --offwhite:#EFEAE1; --ink:#131244; --muted:#5A5972; --line:#DCD5C8;
+    --radius:4px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:'Assistant',sans-serif; background:var(--offwhite); color:var(--ink); line-height:1.7;}
+  img{max-width:100%; display:block;}
+  a{color:inherit; text-decoration:none;}
+  h1,h2,h3{font-family:'Frank Ruhl Libre', serif; font-weight:700; line-height:1.2;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
+  section{padding:88px 0;}
+
+  .concept-tag{background:var(--navy); color:#fff; text-align:center; padding:10px; font-size:13px; letter-spacing:.03em;}
+  .concept-tag b{color:var(--periwinkle);}
+
+  header{background:var(--offwhite); border-bottom:1px solid var(--line);}
+  .nav{display:flex; align-items:center; justify-content:space-between; padding:20px 0;}
+  .header-logo{height:48px;}
+  nav.links{display:flex; gap:30px;}
+  nav.links a{font-size:15px; font-weight:600; color:var(--navy);}
+  .pill{display:inline-flex; align-items:center; gap:8px; padding:13px 28px; border-radius:999px; font-weight:700; font-size:15px;}
+  .pill-light{background:var(--periwinkle); color:var(--navy);}
+  .pill-light:hover{background:#5A8CF5;}
+  .pill-solid{background:var(--terracotta); color:#fff;}
+  .pill-solid:hover{background:var(--terracotta-dark);}
+
+  .hero{position:relative; min-height:86vh; display:flex; align-items:center; overflow:hidden;}
+  .hero-bg{position:absolute; inset:0; background:url('images/community-rishon.jpg') center 30%/cover no-repeat;}
+  .hero-bg::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(19,18,68,.88), rgba(19,18,68,.72) 55%, var(--offwhite) 100%);}
+  .hero-inner{position:relative; z-index:2; color:#fff; text-align:center; width:100%;}
+  .eyebrow{font-size:14px; font-weight:700; letter-spacing:.14em; color:var(--skyblue); text-transform:uppercase; margin-bottom:26px; display:block;}
+  .hero h1{font-size:clamp(36px,6vw,64px); max-width:860px; margin:0 auto 30px; color:#fff;}
+  .hero p{font-size:19px; max-width:600px; margin:0 auto 40px; color:#E7E4F2;}
+
+  .about{text-align:center;}
+  .about h2{font-size:clamp(28px,4vw,40px); margin-bottom:28px;}
+  .about p{max-width:720px; margin:0 auto 18px; color:var(--muted); font-size:17px;}
+
+  .activities-head{text-align:center; margin-bottom:50px;}
+  .activities-head .eyebrow{color:var(--terracotta);}
+  .activities-head h2{font-size:clamp(28px,4vw,40px); color:var(--navy);}
+
+  .grid-activities{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px;}
+  .flip-card{perspective:1200px; height:230px;}
+  .flip-inner{position:relative; width:100%; height:100%; transition:transform .55s cubic-bezier(.4,.2,.2,1); transform-style:preserve-3d;}
+  .flip-card:hover .flip-inner, .flip-card.flipped .flip-inner{transform:rotateY(180deg);}
+  .flip-front, .flip-back{position:absolute; inset:0; backface-visibility:hidden; padding:26px 22px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:18px;}
+  .flip-front{background:#fff; border:1px solid var(--line);}
+  .logo-mark{width:100px; height:100px; background:var(--offwhite); display:flex; align-items:center; justify-content:center; padding:14px;}
+  .logo-mark img{width:100%; height:100%; object-fit:contain;}
+  .front-btn{display:inline-flex; padding:9px 22px; border-radius:999px; border:1.5px solid var(--terracotta); color:var(--terracotta); font-weight:700; font-size:13.5px;}
+  .flip-back{background:var(--navy); color:#fff; transform:rotateY(180deg);}
+  .flip-back h4{font-family:'Frank Ruhl Libre',serif; font-size:16px; color:var(--skyblue);}
+  .flip-back p{font-size:13.5px; color:#D9D7EC;}
+
+  footer{background:var(--navy); color:#C9C6E0; padding:50px 0; text-align:center; font-size:14px;}
+</style>
+</head>
+<body>
+
+<div class="concept-tag">קונספט א — בהשראת <b>charity: water</b> · פוטוגרפיה מלאה, סריף אלגנטי (Frank Ruhl Libre), בלוק צבע נייבי, כפתורי פיל</div>
+
+<header>
+  <div class="wrap nav">
+    <img class="header-logo" src="images/yesodot-logo.png" alt="יסודות לצמיחה דרור">
+    <nav class="links">
+      <a href="#about">אודות</a>
+      <a href="#activities">תחומי פעילות</a>
+      <a href="#">פעילות בקהילה</a>
+      <a href="#">פעילות בחירום</a>
+    </nav>
+    <a class="pill pill-solid" href="#">תרמו עכשיו</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="wrap hero-inner">
+    <span class="eyebrow">תנועת דרור ישראל</span>
+    <h1>מקימים ומפעילים יסודות לצמיחה בכל רחבי הארץ</h1>
+    <p>פרויקטים חינוכיים, קהילתיים ותרבותיים — לפעוטות, ילדים, בני נוער, צעירים, מבוגרים וזקנים, בדגש על הפריפריה הגיאוגרפית והחברתית.</p>
+    <a class="pill pill-light" href="#">תרמו היום</a>
+  </div>
+</section>
+
+<section class="about">
+  <div class="wrap">
+    <h2>מי אנחנו</h2>
+    <p>עמותת יסודות לצמיחה דרור מקימה ומפעילה פרויקטים חינוכיים, קהילתיים ותרבותיים לפעוטות, ילדים, בני נוער, צעירים, מבוגרים וזקנים בכל רחבי הארץ, בדגש על הפריפריה הגיאוגרפית והחברתית.</p>
+    <p>הפרויקטים מופעלים ומודרכים על ידי חברי וחברות קיבוצי המחנכים, הפרושים בכל רחבי הארץ.</p>
+  </div>
+</section>
+
+<section id="activities">
+  <div class="wrap">
+    <div class="activities-head">
+      <span class="eyebrow">תחומי פעילות</span>
+      <h2>הפרויקטים שלנו</h2>
+    </div>
+    <div class="grid-activities">
+      <div class="flip-card"><div class="flip-inner">
+        <div class="flip-front"><div class="logo-mark"><img src="images/logos/meorer.svg" alt="לוגו המעורר"></div><a class="front-btn" href="https://meorer.co.il" target="_blank" rel="noopener">לאתר הפרויקט</a></div>
+        <div class="flip-back"><div><h4>המעורר</h4><p>פיתוח תוכניות חינוכיות, הכשרת צוותי חינוך וליווי מערכות חינוך ברחבי הארץ.</p></div></div>
+      </div></div>
+      <div class="flip-card"><div class="flip-inner">
+        <div class="flip-front"><div class="logo-mark"><img src="images/logos/hachaluz.webp" alt="לוגו החלוץ"></div><a class="front-btn" href="https://hachaluz.org.il" target="_blank" rel="noopener">לאתר הפרויקט</a></div>
+        <div class="flip-back"><div><h4>החלוץ</h4><p>חינוך דרך ספורט לילדים ולבני נוער, בעשרות רשויות ברחבי הארץ מאז 2010.</p></div></div>
+      </div></div>
+      <div class="flip-card"><div class="flip-inner">
+        <div class="flip-front"><div class="logo-mark"><img src="images/logos/mataim.png" alt="לוגו דרור מטעים חינוכיים"></div><a class="front-btn" href="https://drorisrael.org.il/education/mataim-chinuchiim/" target="_blank" rel="noopener">לאתר הפרויקט</a></div>
+        <div class="flip-back"><div><h4>דרור מטעים חינוכיים</h4><p>פעילות חינוכית-חקלאית בקיבוץ רביד, ללמוד לאהוב לעבוד.</p></div></div>
+      </div></div>
+      <div class="flip-card"><div class="flip-inner">
+        <div class="flip-front"><div class="logo-mark"><img src="images/logos/drorsenior.png" alt="לוגו רשת קהילות דרור לגיל השלישי"></div><a class="front-btn" href="https://www.drorsenior.com" target="_blank" rel="noopener">לאתר הפרויקט</a></div>
+        <div class="flip-back"><div><h4>רשת קהילות דרור לגיל השלישי</h4><p>קבוצות חברתיות לבני ולבנות הגיל השלישי, לקידום הזדקנות מיטבית.</p></div></div>
+      </div></div>
+      <div class="flip-card"><div class="flip-inner">
+        <div class="flip-front"><div class="logo-mark"><img src="images/logos/akkojam.png" alt="לוגו הג'אם"></div><a class="front-btn" href="https://www.akkojam.co.il" target="_blank" rel="noopener">לאתר הפרויקט</a></div>
+        <div class="flip-back"><div><h4>הג'אם</h4><p>מוסד תרבותי בלב עכו העתיקה, פועל מאז 2009.</p></div></div>
+      </div></div>
+      <div class="flip-card"><div class="flip-inner">
+        <div class="flip-front"><div class="logo-mark"><img src="images/logos/tamara.png" alt="לוגו תמרה"></div><a class="front-btn" href="https://studiotamara.co.il" target="_blank" rel="noopener">לאתר הפרויקט</a></div>
+        <div class="flip-back"><div><h4>תמרה</h4><p>סטודיו תנועה ויוגה ברחובות, הוקם ע"י חברי תנועת דרור ישראל.</p></div></div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<footer>קונספט א לסקירה — פרוטוטייפ עיצובי, לא לפרסום</footer>
+
+<script>
+  document.querySelectorAll('.flip-card').forEach(c=>c.addEventListener('click',e=>{if(!e.target.closest('a'))c.classList.toggle('flipped');}));
+</script>
+</body>
+</html>

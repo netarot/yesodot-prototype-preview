@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>קונספט ב — יסודות לצמיחה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Secular+One&family=Assistant:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --terracotta:#BF514F; --terracotta-dark:#9F413F; --navy:#131244;
+    --skyblue:#B2D5E2; --periwinkle:#71A0FF; --royal:#374EA8;
+    --offwhite:#EFEAE1; --ink:#131244; --muted:#5A5972; --line:#DCD5C8;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Assistant',sans-serif; background:var(--offwhite); color:var(--ink); line-height:1.7;}
+  img{max-width:100%; display:block;}
+  a{color:inherit; text-decoration:none;}
+  h1,h2,h3{font-family:'Secular One', sans-serif; font-weight:400; line-height:1.15;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
+  section{padding:88px 0;}
+  #about,#activities,#community,#emergency{scroll-margin-top:90px;}
+
+  header{position:fixed; top:0; left:0; right:0; z-index:50; background:transparent; border-bottom:1px solid transparent; transition:background .25s ease, border-color .25s ease;}
+  header.scrolled{background:#fff; border-color:var(--line);}
+  .nav{display:flex; align-items:center; justify-content:space-between; padding-top:20px; padding-bottom:20px;}
+  .header-logo{height:70px; filter:brightness(0) invert(1); transition:filter .25s ease;}
+  header.scrolled .header-logo{filter:none;}
+  nav.links{display:flex; gap:28px;}
+  nav.links a{font-size:16.5px; font-weight:600; color:#fff; transition:color .25s ease;}
+  header.scrolled nav.links a{color:var(--navy);}
+  .btn-sq{display:inline-flex; align-items:center; gap:8px; padding:12px 26px; border-radius:2px; font-weight:700; font-size:14.5px; border:1.75px solid #fff; color:#fff; background:transparent; transition:background .15s, color .15s, border-color .25s ease;}
+  .nav .btn-sq{font-size:16.5px; padding:13px 28px;}
+  .btn-sq:hover{background:#fff; color:var(--navy);}
+  header.scrolled .btn-sq{border-color:var(--navy); color:var(--navy);}
+  header.scrolled .btn-sq:hover{background:var(--navy); color:#fff;}
+  .btn-sq-solid{}
+  .btn-sq-outline{border-color:rgba(255,255,255,.55);}
+  .btn-sq-outline:hover{border-color:#fff;}
+  .btn-sq-white{}
+
+  .nav-toggle{display:none; flex-direction:column; justify-content:center; gap:5px; width:30px; height:24px; background:none; border:none; cursor:pointer; padding:0;}
+  .nav-close{display:none;}
+  .nav-backdrop{display:none;}
+  .nav-toggle span{display:block; width:100%; height:2px; background:#fff; transition:background .25s ease;}
+  header.scrolled .nav-toggle span{background:var(--navy);}
+
+  .hero{position:relative; color:#fff; height:66.67vh; min-height:560px; display:flex; align-items:center; overflow:hidden;}
+  .hero-bg{position:absolute; inset:0; background:url('images/community-mitzpe-ramon.jpg') center 35%/cover no-repeat;}
+  .hero-bg::after{content:""; position:absolute; inset:0; background:rgba(19,18,68,.42);}
+  .hero .wrap{position:relative; z-index:2;}
+  .eyebrow{font-size:13px; font-weight:700; letter-spacing:.1em; color:var(--skyblue); text-transform:uppercase; margin-bottom:10px; display:block;}
+  .hero .eyebrow{color:#fff;}
+  .hero h1{max-width:780px; margin-bottom:28px; color:#fff;}
+  .hero h1 .main-line{display:block; font-size:clamp(34px,5.6vw,58px);}
+  .hero h1 .sub-line{display:block; font-size:clamp(22px,3.4vw,34px); font-weight:400; color:#fff; margin-top:6px;}
+  .hero p{font-size:18px; max-width:580px; color:#fff;}
+
+  .divider{background:transparent; padding:64px 0 0;}
+  .divider-line{height:6px; background:var(--royal);}
+  .divider + section{padding-top:20px;}
+
+  .about{text-align:right;}
+  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:center;}
+  .about h2{font-size:clamp(26px,3.6vw,36px); color:var(--navy); margin-bottom:22px;}
+  .about p{color:var(--muted); font-size:16.5px; margin-bottom:14px;}
+  .about-media{aspect-ratio:4/3; overflow:hidden;}
+  .about-media img{width:100%; height:100%; object-fit:cover;}
+
+  .activities-head{margin-bottom:28px;}
+  .activities-head .eyebrow{color:var(--royal);}
+  .activities-head h2{font-size:clamp(26px,3.6vw,36px); color:var(--navy);}
+
+  .projects-split{display:grid; grid-template-columns:1.2fr 0.8fr; gap:72px; align-items:start;}
+  .projects-sticky{position:sticky; top:30px;}
+  .projects-image{height:62vh; overflow:hidden;}
+  .projects-image img{width:100%; height:100%; object-fit:cover;}
+  .projects-list{position:relative; display:grid; grid-template-columns:1fr 1fr; gap:32px 64px;}
+  .projects-list::before{content:""; position:absolute; top:4px; bottom:4px; right:50%; width:1px; background:var(--line);}
+  .project-card{background:transparent; padding:0; display:flex; flex-direction:column; align-items:flex-start; gap:14px;}
+  .logo-mark{width:170px; height:110px; background:transparent; display:flex; align-items:center; justify-content:flex-start; padding:0; flex:none;}
+  .logo-mark img{max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain;}
+  .project-card p{font-size:13.5px; color:var(--muted);}
+  .front-btn{position:relative; display:inline-flex; align-items:center; gap:6px; padding-bottom:3px; color:var(--navy); font-weight:700; font-size:14px;}
+  .front-btn::after{content:""; position:absolute; right:0; bottom:0; width:100%; height:2px; background:var(--navy); transform:scaleX(0); transform-origin:right; transition:transform .25s ease;}
+  .front-btn:hover::after{transform:scaleX(1);}
+  .project-card.soon{opacity:.6;}
+  .project-card.soon .front-btn{color:var(--muted);}
+  .project-card.soon .front-btn::after{background:var(--muted);}
+
+  .community{background:var(--offwhite);}
+  .community-grid{display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start;}
+  .community-gallery{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .community-gallery img{width:100%; aspect-ratio:4/3.3; object-fit:cover;}
+  .community-text{padding-top:4px;}
+  .community-text h2{font-size:clamp(26px,3.6vw,36px); color:var(--navy); margin-bottom:20px;}
+  .community-text p{color:var(--muted); font-size:16px; margin-bottom:14px;}
+
+  .emergency{background:var(--navy); color:#fff;}
+  .emergency .eyebrow{color:var(--periwinkle); margin-bottom:10px;}
+  .emergency h2{color:#fff; font-size:clamp(26px,3.6vw,36px); margin-bottom:0;}
+  .emergency-head{position:sticky; top:0; background:var(--navy); padding-top:28px; padding-bottom:16px; z-index:3;}
+  .emergency-lead{color:#A7A4C2; font-size:17px; max-width:760px; margin:16px 0 40px;}
+  .grid-emergency{position:relative; display:grid; grid-template-columns:1fr 1fr; gap:40px 64px;}
+  .grid-emergency::before{content:""; position:absolute; top:4px; bottom:4px; right:50%; width:1px; background:rgba(255,255,255,.15);}
+  .em-card{background:transparent; display:flex; flex-direction:column; gap:12px;}
+  .em-card img{width:100%; aspect-ratio:16/10; object-fit:cover;}
+  .em-card .body{padding:0;}
+  .em-card .city{font-size:12px; font-weight:700; color:var(--periwinkle); text-transform:uppercase; letter-spacing:.05em; margin-bottom:6px;}
+  .em-card h3{font-size:16px; margin-bottom:8px; font-family:'Secular One',sans-serif;}
+  .em-card p{font-size:13.5px; color:#C9C6E0;}
+
+  .donate-band{margin-top:56px; background:var(--terracotta); padding:40px 36px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:24px;}
+  .donate-band h3{font-size:22px; margin-bottom:8px; color:#fff; font-family:'Secular One',sans-serif;}
+  .donate-band p{color:#FBE3E2; font-size:14.5px; max-width:420px;}
+  .donate-buttons{display:flex; gap:12px; flex-wrap:wrap;}
+
+  footer{background:var(--navy); color:#C9C6E0; padding-top:60px; font-size:14px;}
+  .footer-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:46px; padding-bottom:40px; border-bottom:1px solid rgba(255,255,255,.1);}
+  .footer-grid h4{color:#fff; font-size:15px; margin-bottom:16px; font-family:'Secular One',sans-serif;}
+  .footer-logo{height:52px; filter:brightness(0) invert(1); margin-bottom:16px;}
+  .footer-grid ul{list-style:none; display:flex; flex-direction:column; gap:10px; font-size:14px;}
+  .footer-grid p{margin-top:12px; color:#A7A4C2; font-size:14px;}
+  .footer-bottom{display:flex; justify-content:space-between; padding:22px 0; font-size:13px; color:#847FA8; flex-wrap:wrap; gap:8px;}
+
+  @media (max-width:900px){
+    section{padding:56px 0;}
+
+    .nav-toggle{display:flex;}
+    .header-logo{height:53px;}
+    .nav .btn-sq{font-size:14px; padding:10px 18px;}
+    .nav-backdrop{
+      display:block; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:39;
+      opacity:0; pointer-events:none; transition:opacity .3s ease;
+    }
+    .nav-backdrop.open{opacity:1; pointer-events:auto;}
+    nav.links{
+      position:fixed; top:0; right:0; bottom:0; left:auto; width:85%; max-width:360px;
+      flex-direction:column; align-items:flex-start;
+      background:var(--navy); padding:96px 28px 28px; gap:22px;
+      transform:translateX(100%); transition:transform .3s ease; z-index:40;
+      box-shadow:-8px 0 24px rgba(0,0,0,.2);
+    }
+    nav.links.open{transform:translateX(0);}
+    nav.links a, header.scrolled nav.links a{color:#fff; font-size:19px;}
+
+    .nav-close{display:flex; position:absolute; top:24px; right:28px; width:30px; height:30px; background:none; border:none; cursor:pointer; padding:0; align-items:center; justify-content:center;}
+    .nav-close span{position:absolute; width:100%; height:2px; background:#fff;}
+    .nav-close span:first-child{transform:rotate(45deg);}
+    .nav-close span:last-child{transform:rotate(-45deg);}
+
+    .hero p{font-size:16px;}
+
+    .about-grid{grid-template-columns:1fr; gap:32px;}
+    .about-media{order:-1;}
+
+    .projects-split{grid-template-columns:1fr;}
+    .projects-sticky{position:static;}
+    .projects-image{height:280px;}
+    .projects-list{grid-template-columns:1fr; gap:28px;}
+    .projects-list::before{display:none;}
+
+    .community-grid{grid-template-columns:1fr; gap:32px;}
+    .community-gallery{grid-template-columns:1fr; gap:16px;}
+
+    .grid-emergency{grid-template-columns:1fr; gap:28px;}
+    .grid-emergency::before{display:none;}
+
+    .donate-band{padding:28px 20px;}
+    .donate-band > div{width:100%;}
+    .donate-buttons{flex-direction:column; width:100%;}
+    .donate-buttons .btn-sq{justify-content:center; width:100%;}
+
+    .footer-grid{grid-template-columns:1fr; gap:32px;}
+    .footer-bottom{flex-direction:column; align-items:center; text-align:center;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#"><img class="header-logo" src="images/yesodot-logo.png" alt="יסודות לצמיחה דרור"></a>
+    <button class="nav-toggle" id="navToggle" aria-label="תפריט" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-backdrop" id="navBackdrop"></div>
+    <nav class="links">
+      <button class="nav-close" id="navClose" aria-label="סגור תפריט">
+        <span></span><span></span>
+      </button>
+      <a href="#about">אודות</a>
+      <a href="#activities">תחומי פעילות</a>
+      <a href="#community">פעילות בקהילה</a>
+      <a href="#emergency">פעילות בחירום</a>
+    </nav>
+    <a class="btn-sq btn-sq-solid" href="https://secured.israelgives.org/he/give/dror" target="_blank" rel="noopener">לתרומה</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="wrap">
+    <h1><span class="main-line">יסודות לצמיחה</span><span class="sub-line">מקימים בכל רחבי הארץ</span></h1>
+    <p>פרויקטים חינוכיים, קהילתיים ותרבותיים לפעוטות, ילדים, בני נוער, צעירים, מבוגרים וזקנים,<br>בדגש על הפריפריה הגיאוגרפית והחברתית.</p>
+  </div>
+</section>
+
+<div class="divider"><div class="wrap"><div class="divider-line"></div></div></div>
+
+<section id="about" class="about">
+  <div class="wrap about-grid">
+    <div>
+      <span class="eyebrow" style="color:var(--terracotta)">אודות</span>
+      <h2>מי אנחנו</h2>
+      <p>עמותת יסודות לצמיחה דרור מקימה ומפעילה פרויקטים חינוכיים, קהילתיים ותרבותיים לפעוטות, ילדים, בני נוער, צעירים, מבוגרים וזקנים בכל רחבי הארץ, בדגש על הפריפריה הגיאוגרפית והחברתית.</p>
+      <p>הפרויקטים נפרשים על פני תחומים מגוונים: חינוך, קהילה, תרבות, חקלאות, ספורט ורווחה, ומכוונים להגשמת ערכי הציונות, חלוציות, שוויון ערך האדם, דמוקרטיה ושלום.</p>
+      <p>בעתות חירום לאומי, העמותה מתגייסת ומקיימת אופני פעילות ייחודיים וייעודיים למגוון אוכלוסיות, בתיאום הרשויות המקומיות והארציות.</p>
+      <p>הפרויקטים מופעלים ומודרכים על ידי חברי וחברות קיבוצי המחנכים (תנועת דרור ישראל), הפרושים בכל רחבי הארץ.</p>
+    </div>
+    <div class="about-media"><img src="images/community-carmiel.jpg" alt="אסיפה ישראלית בכרמיאל"></div>
+  </div>
+</section>
+
+<div class="divider"><div class="wrap"><div class="divider-line"></div></div></div>
+
+<section id="activities">
+  <div class="wrap">
+    <div class="activities-head">
+      <span class="eyebrow">תחומי פעילות</span>
+      <h2>הפרויקטים שלנו</h2>
+    </div>
+    <div class="projects-split">
+      <div class="projects-sticky">
+        <div class="projects-image"><img src="images/community-rishon.jpg" alt="ערב מובילי קהילות בראשון לציון"></div>
+      </div>
+      <div class="projects-list">
+        <div class="project-card">
+          <div class="logo-mark"><img src="images/logos/meorer.svg" alt="לוגו המעורר"></div>
+          <p>פיתוח תוכניות חינוכיות, הכשרת צוותי חינוך וליווי מערכות חינוך ברחבי הארץ.</p>
+          <a class="front-btn" href="https://meorer.co.il" target="_blank" rel="noopener">לאתר הפרויקט ←</a>
+        </div>
+        <div class="project-card">
+          <div class="logo-mark"><img src="images/logos/hachaluz.webp" alt="לוגו החלוץ"></div>
+          <p>חינוך דרך ספורט לילדים ולבני נוער, בעשרות רשויות ברחבי הארץ מאז 2010.</p>
+          <a class="front-btn" href="https://hachaluz.org.il" target="_blank" rel="noopener">לאתר הפרויקט ←</a>
+        </div>
+        <div class="project-card">
+          <div class="logo-mark"><img src="images/logos/mataim.png" alt="לוגו דרור מטעים חינוכיים"></div>
+          <p>פעילות חינוכית-חקלאית בקיבוץ רביד, ללמוד לאהוב לעבוד.</p>
+          <a class="front-btn" href="https://drorisrael.org.il/education/mataim-chinuchiim/" target="_blank" rel="noopener">לאתר הפרויקט ←</a>
+        </div>
+        <div class="project-card">
+          <div class="logo-mark"><img src="images/logos/drorsenior.png" alt="לוגו רשת קהילות דרור לגיל השלישי"></div>
+          <p>קבוצות חברתיות לבני ולבנות הגיל השלישי, לקידום הזדקנות מיטבית.</p>
+          <a class="front-btn" href="https://www.drorsenior.com" target="_blank" rel="noopener">לאתר הפרויקט ←</a>
+        </div>
+        <div class="project-card">
+          <div class="logo-mark"><img src="images/logos/akkojam.png" alt="לוגו הג'אם"></div>
+          <p>מוסד תרבותי בלב עכו העתיקה, פועל מאז 2009.</p>
+          <a class="front-btn" href="https://www.akkojam.co.il" target="_blank" rel="noopener">לאתר הפרויקט ←</a>
+        </div>
+        <div class="project-card">
+          <div class="logo-mark"><img src="images/logos/etzlenu.png" alt="לוגו אצלנו"></div>
+          <p>פיתוח קהילתי מקומי, ליווי תהליכים והכשרת צוותים.</p>
+          <a class="front-btn" href="https://etzlenu.org.il" target="_blank" rel="noopener">לאתר הפרויקט ←</a>
+        </div>
+        <div class="project-card">
+          <div class="logo-mark"><img src="images/logos/torenu.svg?v=2" alt="לוגו תורנו"></div>
+          <p>תוכנית ארצית לצעירים (25–35) בגבול הצפון ובנגב המערבי.</p>
+          <a class="front-btn" href="https://www.torenu.org" target="_blank" rel="noopener">לאתר הפרויקט ←</a>
+        </div>
+        <div class="project-card">
+          <div class="logo-mark"><img src="images/logos/rujum.png" alt="לוגו רוג'ום"></div>
+          <p>רשת קהילות יוצרות לצעירים וצעירות (20–35).</p>
+          <a class="front-btn" href="https://www.rujum.org.il" target="_blank" rel="noopener">לאתר הפרויקט ←</a>
+        </div>
+        <div class="project-card">
+          <div class="logo-mark"><img src="images/logos/tamara.png" alt="לוגו תמרה"></div>
+          <p>סטודיו תנועה ויוגה ברחובות, הוקם ע"י חברי תנועת דרור ישראל.</p>
+          <a class="front-btn" href="https://studiotamara.co.il" target="_blank" rel="noopener">לאתר הפרויקט ←</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="wrap"><div class="divider-line"></div></div></div>
+
+<section id="community" class="community">
+  <div class="wrap community-grid">
+    <div class="community-text">
+      <span class="eyebrow" style="color:var(--terracotta)">פעילות קהילתית מקומית</span>
+      <h2>קהילות חיות, מעורבות ומשפיעות</h2>
+      <p>עמותת יסודות לצמיחה דרור פועלת לפיתוח ולחיזוק קהילות מקומיות ברחבי הארץ. קיבוצי המחנכים שלנו פועלים מתוך אמונה בכוחה של קהילה ליצור שייכות, להצמיח יוזמות ולחולל שינוי חברתי — ולהפוך את מקום המגורים למרחב של מפגש, יצירה, עשייה משותפת ואחריות הדדית.</p>
+      <p>במסגרת הפעילות אנו יוזמים ומפתחים מרחבים חינוכיים, חברתיים ותרבותיים המחברים בין חברי וחברות תנועת דרור ישראל לבין תושבי המקום: גינות קהילתיות, מרחבי יצירה ותרבות, קבוצות קהילתיות, יוזמות שכונתיות ואירועים משותפים.</p>
+      <p>באמצעות חיבורים בין אנשים, ליווי יוזמות מקומיות ושיתופי פעולה עם רשויות וארגונים, אנו מבקשים להצמיח קהילות חיות שבהן אנשים לא רק חיים זה לצד זה, אלא יוצרים יחד מציאות של שותפות, ערבות הדדית ותקווה.</p>
+    </div>
+    <div class="community-gallery">
+      <img src="images/community-sderot.jpg" alt="פעילות קהילתית בשדרות, מובילי קהילה">
+      <img src="images/community-mitzpe-ramon.jpg" alt="סיור בקהילה במצפה רמון">
+      <img src="images/community-carmiel.jpg" alt="אסיפה ישראלית בכרמיאל">
+      <img src="images/community-rishon.jpg" alt="ערב מובילי קהילות בראשון לציון">
+    </div>
+  </div>
+</section>
+
+<section id="emergency" class="emergency">
+  <div class="wrap">
+    <div class="emergency-head">
+      <span class="eyebrow">פעילות בחירום</span>
+      <h2>נוכחים גם ברגעי המשבר</h2>
+    </div>
+    <p class="emergency-lead">בשנים האחרונות, לנוכח מצבי המלחמה והחירום שפקדו את החברה הישראלית, העמותה מתגייסת לתת מענה לצורכי השעה ולחזק את המקומות שבהם היא פועלת — מתוך אמונה בכוחה של קהילה ובחשיבותה של הערבות ההדדית דווקא ברגעי משבר. אנו מפעילים מערכי מתנדבים ומוקדי פעילות קהילתיים ברחבי הארץ, בשיתוף רשויות וארגונים.</p>
+
+    <div class="grid-emergency">
+      <div class="em-card">
+        <img src="images/emergency-sderot.jpg" alt="ועד הנהגות, שדרות">
+        <div class="body"><div class="city">שדרות</div><h3>ועדי הנהגות</h3><p>הקמת 7 ועדי הנהגות של תושבי שדרות לדאגה לצורכי הקהילה.</p></div>
+      </div>
+      <div class="em-card">
+        <img src="images/emergency-ashkelon.jpg" alt="קבוצות צעירים, אשקלון">
+        <div class="body"><div class="city">אשקלון</div><h3>מקלטים וקייטנות</h3><p>הפעלות לילדים במקלטים וקבוצות צעירים, בעיר שמופגזת מתחילת המלחמה.</p></div>
+      </div>
+      <div class="em-card">
+        <img src="images/emergency-beersheba.jpg" alt="מקלטים, שכונה ג', באר שבע">
+        <div class="body"><div class="city">באר שבע, שכונה ג׳</div><h3>מקלטים</h3><p>פעילות הפגתית קבועה במקלטים ציבוריים, בשילוב דוברי עברית וערבית.</p></div>
+      </div>
+      <div class="em-card">
+        <img src="images/emergency-mitzpe-ramon.jpg" alt="אירוח מפונים, מצפה רמון">
+        <div class="body"><div class="city">מצפה רמון</div><h3>אירוח מפונים</h3><p>אירוח וקליטה של מפוני קיבוץ ארז לכל מסגרות היישוב.</p></div>
+      </div>
+      <div class="em-card">
+        <img src="images/emergency-shelter-rehovot.jpg" alt="מקלטים מוארים, רחובות">
+        <div class="body"><div class="city">רחובות</div><h3>מקלטים מוארים</h3><p>הפעלת עשרות מקלטים בעיר: קבלות שבת, שעות סיפור ותאטרון קהילתי.</p></div>
+      </div>
+      <div class="em-card">
+        <img src="images/emergency-haifa.jpg" alt="צוותי חירום, חיפה">
+        <div class="body"><div class="city">חיפה</div><h3>צוותי חירום שכונתיים</h3><p>צוותי חירום לפי בניינים, לצד קידום יוזמות קהילתיות.</p></div>
+      </div>
+      <div class="em-card">
+        <img src="images/emergency-garden-akko.jpg" alt="גינה קהילתית, עכו">
+        <div class="body"><div class="city">עכו</div><h3>חוסן קהילתי</h3><p>נאמני חירום רובעיים, גינה קהילתית פעילה וקבוצות נשים וקשישים.</p></div>
+      </div>
+    </div>
+
+    <div class="donate-band">
+      <div>
+        <h3>לתרומה לפעילות החירום שלנו</h3>
+        <p>כל תרומה מסייעת לנו להמשיך ולהעניק מענה חינוכי, חברתי ואנושי לקהילות בחירום.</p>
+      </div>
+      <div class="donate-buttons">
+        <a class="btn-sq btn-sq-white" href="https://secured.israelgives.org/he/give/dror" target="_blank" rel="noopener">תרומה בעברית</a>
+        <a class="btn-sq btn-sq-outline" style="border-color:#fff;" href="https://secured.israelgives.org/en/give/dror" target="_blank" rel="noopener">Donate in English</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap footer-grid">
+    <div>
+      <img src="images/yesodot-logo.png" alt="יסודות לצמיחה דרור" class="footer-logo">
+      <p>עמותת יסודות לצמיחה דרור מקימה ומפעילה פרויקטים חינוכיים, קהילתיים ותרבותיים בכל רחבי הארץ, בדגש על הפריפריה הגיאוגרפית והחברתית.</p>
+    </div>
+    <div>
+      <h4>מידע וטפסים</h4>
+      <ul>
+        <li><a href="pages/payment-terms.html">תקנון תשלומים</a></li>
+        <li><a href="pages/refund-policy.html">נוהל החזרים</a></li>
+        <li><a href="pages/accessibility.html">הסדרי נגישות</a></li>
+        <li><a href="pages/updates.html">עדכונים, שותפים ושונות</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>יצירת קשר</h4>
+      <ul>
+        <li>דרך ההגנה 34, תל אביב, מיקוד 6772137</li>
+        <li>טל: 03-5125802</li>
+        <li><a href="mailto:yesodot@drorisrael.org.il">yesodot@drorisrael.org.il</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© עמותת יסודות לצמיחה דרור</span>
+  </div>
+</footer>
+
+<script>
+  const header = document.querySelector('header');
+  const projectsSticky = document.querySelector('.projects-sticky');
+  const emergencyHead = document.querySelector('.emergency-head');
+  function placeHeader(){
+    const clear = header.offsetHeight + 12;
+    if (projectsSticky) projectsSticky.style.top = clear + 'px';
+    if (emergencyHead) emergencyHead.style.top = header.offsetHeight + 'px';
+  }
+  placeHeader();
+  window.addEventListener('resize', placeHeader);
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  const navToggle = document.getElementById('navToggle');
+  const navClose = document.getElementById('navClose');
+  const navBackdrop = document.getElementById('navBackdrop');
+  const navLinks = document.querySelector('nav.links');
+  if (navToggle && navLinks){
+    const closeMenu = () => {
+      navLinks.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      if (navBackdrop) navBackdrop.classList.remove('open');
+    };
+    navToggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', isOpen);
+      if (navBackdrop) navBackdrop.classList.toggle('open', isOpen);
+    });
+    if (navClose) navClose.addEventListener('click', closeMenu);
+    if (navBackdrop) navBackdrop.addEventListener('click', closeMenu);
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+  }
+</script>
+</body>
+</html>
